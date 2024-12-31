@@ -79,34 +79,65 @@
         text-overflow: ellipsis;
         max-width: 260px;
     }
+    .link-container a {
+    max-width: 200px; /* adjust this value based on your needs */
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+    /* Optional: if you want a custom tooltip instead of the default browser tooltip */
+    li:hover .link-container a {
+        overflow: visible;
+        white-space: normal;
+        word-wrap: break-word;
+    }
     #link-list a:hover {
         background: #404040;
         border-color: #66b3ff;
     }
+    .timestamp-badge {
+        background-color: #eee;
+        border-radius: 12px;
+        padding: 2px 8px;
+        font-size: 12px;
+        color: #666;
+        margin: 0 8px;
+    }
     .link-container {
         display: flex;
         align-items: center;
-        gap: 12px;
+        gap: 8px;
     }
-    .send-icon {
+    .action-icons {
+        display: flex;
+        gap: 4px;
+        margin-left: auto;
+    }
+    .send-icon, .play-icon {
         cursor: pointer;
-        padding: 8px;
-        border-radius: 50%;
+        padding: 4px;
+        border-radius: 4px;
         background: #66b3ff;
         color: white;
-        width: 32px;
-        height: 32px;
+        width: 24px;
+        height: 24px;
         display: flex;
         align-items: center;
         justify-content: center;
         transition: all 0.2s ease;
-        font-size: 16px;
-        box-shadow: 0 2px 4px rgba(102,179,255,0.2);
+        font-size: 18px;
     }
-    .send-icon:hover {
-        background: #3399ff;
+    .play-icon {
+        background: #4CAF50;
+    }
+    .send-icon:hover, .play-icon:hover {
         transform: scale(1.1);
         box-shadow: 0 4px 8px rgba(102,179,255,0.3);
+    }
+    .play-icon:hover {
+        background: #45a049;
     }
     #link-list:empty::after {
         content: "No M3U8 links found";

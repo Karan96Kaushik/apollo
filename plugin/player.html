@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Apollo Player</title>
+    <style>
+        body {
+            margin: 0;
+            background-color: #1e1e1e;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+        }
+        #video-container {
+            width: 80%;
+            max-width: 1200px;
+            max-height: 95vh;
+        }
+        video {
+            width: 100%;
+            height: 100%;
+            max-height: 95vh;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+        #controls-container {
+            margin-top: 15px;
+            text-align: center;
+        }
+        
+        .download-btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        .download-btn:hover {
+            background-color: #45a049;
+        }
+    </style>
+        <meta http-equiv="Content-Security-Policy" 
+        content="default-src 'self'; 
+                 script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net blob:; 
+                 worker-src blob: 'self';
+                 media-src blob: *;
+                 connect-src *;">
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+</head>
+<body>
+    <div id="video-container">
+        <video id="video" controls></video>
+        <div id="controls-container">
+            <button id="downloadButton" disabled>Download</button>
+        </div>
+    </div>
+    <script src="player.js"></script>
+</body>
+</html> 

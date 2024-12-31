@@ -1,9 +1,9 @@
-let m3u8Links = [];
+let videoLinks = [];
 
 // Monitor network requests
 browser.webRequest.onCompleted.addListener(
   async (details) => {
-    if (details.url.endsWith(".m3u8")) {
+    if (details.url.includes(".m3u8") || details.url.endsWith(".mp4")) {
       const vidUrl = details.url;
       
       // Execute script in the tab to get video name
@@ -26,14 +26,21 @@ browser.webRequest.onCompleted.addListener(
         } else {
           videoName = titleResults?.[0];
         }
+        if (videoName.includes('Apollo Player')) {
+          return;
+        }
       } catch (error) {
         console.error('Error getting video name:', error);
         return;
       }
 
-      if (videoName && !m3u8Links.find(link => link.vidName === videoName)) {
-        m3u8Links.push({ vidName: videoName, vidUrl: vidUrl });
-        console.log("Found M3U8 link:", details.url, "for video:", videoName);
+      if (videoName && !videoLinks.find(link => link.vidName === videoName)) {
+        videoLinks.push({ 
+          vidName: videoName, 
+          vidUrl: vidUrl,
+          timestamp: +new Date() 
+        });
+        console.log("Found video link:", details.url, "for video:", videoName);
       }
     }
   },
@@ -41,15 +48,42 @@ browser.webRequest.onCompleted.addListener(
 );
 
 // Scan HTML of the active tab
-function findM3U8InHTML() {
+function findVideoLinksInHTML() {
   browser.tabs.executeScript({
     code: `
-      Array.from(document.querySelectorAll("a[href$='.m3u8']")).map(a => a.href)
+      // Get direct video links from <a> tags
+      const linkUrls = Array.from(document.querySelectorAll("a[href$='.m3u8'], a[href$='.mp4']"))
+        .map(a => a.href);
+      
+      // Get video sources from <video> elements
+      const videoSources = Array.from(document.querySelectorAll('video'))
+        .flatMap(video => {
+          // Get src attribute if present
+          const directSrc = video.src ? [video.src] : [];
+          // Get sources from <source> elements
+          const sourceTags = Array.from(video.querySelectorAll('source'))
+            .map(source => source.src)
+            .filter(src => src.endsWith('.m3u8') || src.endsWith('.mp4'));
+          
+          return [...directSrc, ...sourceTags];
+        })
+        .filter(url => url); // Remove empty strings
+
+      // Combine and return all unique URLs
+      [...new Set([...linkUrls, ...videoSources])]
     `
   }).then((results) => {
     if (results && results[0]) {
-      results[0].forEach((url) => m3u8Links.add(url));
-      console.log("Found M3U8 links in HTML:", results[0]);
+      results[0].forEach((url) => {
+        if (!videoLinks.find(link => link.vidUrl === url)) {
+          videoLinks.push({ 
+            vidName: url, 
+            vidUrl: url,
+            timestamp: +new Date()
+          });
+        }
+      });
+      console.log("Found video links in HTML:", results[0]);
     }
   });
 }
@@ -58,6 +92,6 @@ function findM3U8InHTML() {
 browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
   console.log('Received message:', message);
   if (message.action === "getM3U8Links") {
-    sendResponse(Array.from(m3u8Links));
+    sendResponse(Array.from(videoLinks));
   }
 });

@@ -18,5 +18,7 @@
       "gecko": {
         "id": "vd-dl@bayonetbaron.tech"
       }
-    }
+    },
+    "content_security_policy": "script-src 'self' https://cdn.jsdelivr.net; object-src 'self'",
+    "web_accessible_resources": ["player.html"]
 }

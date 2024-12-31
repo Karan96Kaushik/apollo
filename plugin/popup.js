@@ -6,6 +6,8 @@ document.addEventListener("DOMContentLoaded", () => {
       if (links.length > 0) {
         links.forEach((link) => {
           const listItem = document.createElement("li");
+          listItem.setAttribute('alt', link.vidName);
+          listItem.setAttribute('title', link.vidName);
           const container = document.createElement("div");
           container.className = "link-container";
 
@@ -13,6 +15,30 @@ document.addEventListener("DOMContentLoaded", () => {
           linkElement.href = link.vidUrl;
           linkElement.textContent = link.vidName;
           linkElement.target = "_blank";
+          linkElement.style.overflow = "hidden";
+          linkElement.style.textOverflow = "ellipsis";
+          linkElement.style.whiteSpace = "nowrap";
+
+          const timestampBadge = document.createElement("span");
+          timestampBadge.className = "timestamp-badge";
+          const time = new Date(link.timestamp);
+          timestampBadge.textContent = time.toLocaleTimeString('default', { 
+            hour: '2-digit', 
+            minute: '2-digit',
+            hour12: false 
+          });
+
+          const actionIcons = document.createElement("div");
+          actionIcons.className = "action-icons";
+
+          const playIcon = document.createElement("div");
+          playIcon.className = "play-icon material-icons";
+          playIcon.textContent = "play_arrow";
+          playIcon.addEventListener("click", () => {
+            chrome.tabs.create({
+              url: `player.html?url=${encodeURIComponent(link.vidUrl)}`
+            });
+          });
 
           const sendIcon = document.createElement("span");
           sendIcon.innerHTML = '<span class="material-icons">send</span>';
@@ -40,8 +66,12 @@ document.addEventListener("DOMContentLoaded", () => {
             }
           };
 
+          actionIcons.appendChild(playIcon);
+          actionIcons.appendChild(sendIcon);
+
           container.appendChild(linkElement);
-          container.appendChild(sendIcon);
+          container.appendChild(timestampBadge);
+          container.appendChild(actionIcons);
           listItem.appendChild(container);
           linkList.appendChild(listItem);
         });
