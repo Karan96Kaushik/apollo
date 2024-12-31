@@ -147,6 +147,23 @@
         color: #a0a0a0;
         font-style: italic;
     }
+    .reset-button {
+      margin-left: auto;
+      background: #404040;
+      border: none;
+      border-radius: 4px;
+      padding: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      color: #ffffff;
+      transition: all 0.2s ease;
+    }
+    
+    .reset-button:hover {
+      background: #505050;
+      transform: rotate(180deg);
+    }
   </style>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
@@ -156,6 +173,9 @@
     <!-- <img src="https://github.com/user-attachments/assets/d61dfd72-3702-496a-ba7f-d83e8599aafe" alt="Logo" class="logo"> -->
     <img src="icons/hooded-sweatshirt.png" alt="Logo" class="logo">
     <h1 style="font-family: 'Orbitron', sans-serif;">Apollo</h1>
+    <button id="resetLinks" class="reset-button">
+      <span class="material-icons">refresh</span>
+    </button>
   </div>
   
   <div class="content">

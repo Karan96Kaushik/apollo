@@ -34,7 +34,7 @@ async function download(url, options = {}) {
     filename += '.mp4';
   }
 
-  const outputPath = path.join(downloadFolder, filename);
+  const outputPath = filename;
 
   if (isHLSStream(url)) {
     return downloadHLS(url, outputPath, (progress) => {

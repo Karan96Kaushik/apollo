@@ -1,6 +1,13 @@
 document.addEventListener("DOMContentLoaded", () => {
     const linkList = document.getElementById("link-list");
   
+    // Add reset button handler
+    document.getElementById("resetLinks").addEventListener("click", async () => {
+        await browser.runtime.sendMessage({ action: "resetLinks" });
+        linkList.innerHTML = ""; // Clear the current list
+        linkList.textContent = "No M3U8 links found.";
+    });
+  
     // Request M3U8 links from the background script
     browser.runtime.sendMessage({ action: "getM3U8Links" }).then((links) => {
       if (links.length > 0) {

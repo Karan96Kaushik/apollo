@@ -29,6 +29,11 @@ browser.webRequest.onCompleted.addListener(
         if (videoName.includes('Apollo Player')) {
           return;
         }
+        videoName = videoName.trim().split(' ').filter(Boolean).map(word => word.trim()).join(' ');
+        videoName = videoName.split(' ').filter(Boolean).join(' ');
+        videoName = videoName.split('\n').filter(Boolean).join(' ');
+        videoName = videoName.replace(/\//g, '|');
+
       } catch (error) {
         console.error('Error getting video name:', error);
         return;
@@ -93,5 +98,8 @@ browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
   console.log('Received message:', message);
   if (message.action === "getM3U8Links") {
     sendResponse(Array.from(videoLinks));
+  } else if (message.action === "resetLinks") {
+    videoLinks = [];
+    sendResponse(true);
   }
 });
