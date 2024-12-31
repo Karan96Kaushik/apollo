@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>M3U8 Link Finder</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      min-width: 300px;
+      background-color: #1e1e1e;
+      color: #ffffff;
+    }
+    .header {
+      background-color: #2c2c2c;
+      color: white;
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 1px solid #404040;
+    }
+    .header h1 {
+      margin: 0;
+      font-size: 18px;
+    }
+    .content {
+      padding: 15px;
+    }
+    ul {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+    }
+    li {
+      margin: 8px 0;
+      padding: 8px;
+      background: #2c2c2c;
+      border-radius: 4px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+      color: #e0e0e0;
+    }
+    .footer {
+      background-color: #2c2c2c;
+      padding: 10px;
+      text-align: center;
+      font-size: 12px;
+      color: #a0a0a0;
+      border-top: 1px solid #404040;
+    }
+    .logo {
+      width: 24px;
+      height: 24px;
+    }
+    #link-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    #link-list li {
+        margin-bottom: 12px;
+        transition: transform 0.2s ease;
+    }
+    #link-list li:hover {
+        transform: translateX(5px);
+    }
+    #link-list a {
+        color: #66b3ff;
+        text-decoration: none;
+        display: block;
+        padding: 12px 16px;
+        background: #363636;
+        border-radius: 8px;
+        border: 1px solid #404040;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        transition: all 0.2s ease;
+        font-size: 14px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 260px;
+    }
+    #link-list a:hover {
+        background: #404040;
+        border-color: #66b3ff;
+    }
+    .link-container {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+    .send-icon {
+        cursor: pointer;
+        padding: 8px;
+        border-radius: 50%;
+        background: #66b3ff;
+        color: white;
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+        font-size: 16px;
+        box-shadow: 0 2px 4px rgba(102,179,255,0.2);
+    }
+    .send-icon:hover {
+        background: #3399ff;
+        transform: scale(1.1);
+        box-shadow: 0 4px 8px rgba(102,179,255,0.3);
+    }
+    #link-list:empty::after {
+        content: "No M3U8 links found";
+        display: block;
+        text-align: center;
+        padding: 20px;
+        color: #a0a0a0;
+        font-style: italic;
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="header">
+    <!-- <img src="https://github.com/user-attachments/assets/d61dfd72-3702-496a-ba7f-d83e8599aafe" alt="Logo" class="logo"> -->
+    <img src="icons/hooded-sweatshirt.png" alt="Logo" class="logo">
+    <h1 style="font-family: 'Orbitron', sans-serif;">Apollo</h1>
+  </div>
+  
+  <div class="content">
+    <ul id="link-list"></ul>
+  </div>
+
+  <div class="footer">
+    <span class="material-icons" style="font-size: 14px; vertical-align: middle;">info</span>
+    Click on a link to copy
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
