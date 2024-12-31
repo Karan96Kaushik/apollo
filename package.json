@@ -8,6 +8,6 @@
     "ffmpeg-static": "^5.2.0",
     "got": "^11.8.2",
     "hls-download": "^2.2.1",
-    "m3u8-parser": "^6.0.0",
+    "m3u8-parser": "^6.0.0"
   }
 }
