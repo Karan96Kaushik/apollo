@@ -26,9 +26,9 @@ browser.webRequest.onCompleted.addListener(
         } else {
           videoName = titleResults?.[0];
         }
-        if (videoName.includes('Apollo Player')) {
-          return;
-        }
+        // if (videoName.includes('Apollo Player')) {
+        //   return;
+        // }
         videoName = videoName.trim().split(' ').filter(Boolean).map(word => word.trim()).join(' ');
         videoName = videoName.split(' ').filter(Boolean).join(' ');
         videoName = videoName.split('\n').filter(Boolean).join(' ');
@@ -40,7 +40,7 @@ browser.webRequest.onCompleted.addListener(
       }
 
       if (videoName && !videoLinks.find(link => link.vidName === videoName)) {
-        videoLinks.push({ 
+        videoLinks.unshift({ 
           vidName: videoName, 
           vidUrl: vidUrl,
           timestamp: +new Date() 
